@@ -36,7 +36,6 @@ api.modifyClass("controller:preferences/interface", {
 
 api.registerConnectorClass("user-preferences-interface", "add-keyboard-selector", {
   shouldRender() {
-  return true;
     return require("discourse/lib/utilities").isAppleDevice();
   }
 });
