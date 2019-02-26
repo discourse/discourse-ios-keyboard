@@ -2,4 +2,4 @@
 support of Apple physical keyboard on iOS
 
 
-See: https://github.com/discourse/discourse-ios-keyboard
+See: https://meta.discourse.org/t/discourse-optional-apple-ios-hardware-keyboard-support/110086
