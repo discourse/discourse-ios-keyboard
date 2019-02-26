@@ -1,0 +1,6 @@
+{
+  "name": "Optional Keyboard support for iOS",
+  "about_url": "https://meta.discourse.org/t/optional-mobile-title-switch-component/104238",
+  "license_url": "https://github.com/discourse/discourse-ios-keyboard/blob/master/LICENSE.txt",
+  "component": true
+}

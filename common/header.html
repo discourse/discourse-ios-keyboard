@@ -1,0 +1,54 @@
+<script type="text/discourse-plugin" version="0.8">
+
+// hack till we get translations
+I18n.translations[I18n.locale].js.user.mobile_switch_title = "Switch header to topic title on scroll";
+
+function getHardwareKeyboard() {
+  let pref = localStorage.getItem("hardwareKeyboard");
+  let result = false;
+  if (pref !== null) {
+    result = pref === "true";
+  }
+  return result;
+}
+
+api.modifyClass("model:user", {
+  hardwareKeyboard: function() {
+    return getHardwareKeyboard();
+  }.property()
+});
+
+
+api.modifyClass("controller:preferences/interface", {
+  isIos: function() {
+    return true;
+  }.property(),
+  actions: {
+    save() {
+      this._super();
+      if(getHardwareKeyboard() != this.get("model.enableHardwareKeyboard")){
+        Discourse.set("assetVersion", "forceRefresh");
+      }
+      localStorage.setItem("hardwareKeyboard", this.get("model.hardwareKeyboard").toString());
+    }
+  }
+});
+
+api.registerConnectorClass("user-preferences-interface", "add-keyboard-selector", {
+  shouldRender() {
+  return true;
+    return require("discourse/lib/utilities").isAppleDevice();
+  }
+});
+
+
+if (getHardwareKeyboard()){
+  require("discourse/lib/safari-hacks").default = function() {};
+}
+
+</script>
+
+<script type='text/x-handlebars' data-template-name='/connectors/user-preferences-interface/add-keyboard-selector'>
+  <label class="control-label">{{i18n (theme-prefix 'apple')}}</label>
+  {{preference-checkbox labelKey=(theme-prefix 'enable_hardware_keyboard') checked=model.hardwareKeyboard}}
+</script>
